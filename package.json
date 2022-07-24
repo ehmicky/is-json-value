@@ -45,7 +45,9 @@
     "lib": "src",
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "safe-json-value": "^1.4.1"
+  },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^1.0.84"
   },
