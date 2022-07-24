@@ -9,8 +9,8 @@ Check if a value is valid JSON.
 # Features
 
 - Detects [many types](#warnings) of invalid values with JSON
-- Returns [warning messages](#message) ready to throw or log
-- Returns invalid properties [path](#path) and [value](#value)
+- Returns [warning messages](#message) to throw or log
+- Returns invalid properties' [path](#path) and [value](#value)
 
 # Example
 
@@ -113,7 +113,7 @@ Reason for the warning among:
 
 # Warnings
 
-This is the list of possibly reported warnings.
+This is the list of possible warnings.
 
 ## Invalid types
 
