@@ -1,0 +1,22 @@
+import test from 'ava'
+import isJsonValue from 'is-json-value'
+import { each } from 'test-each'
+
+const symbol = Symbol('test')
+each(
+  [
+    { input: { [symbol]: undefined }, path: [symbol] },
+    { input: [undefined], path: [0] },
+    { input: { '': undefined }, path: [''] },
+    { input: { 0: undefined }, path: ['0'] },
+    { input: { one: { two: undefined } }, path: ['one', 'two'] },
+    { input: { one: [undefined] }, path: ['one', 0] },
+    { input: [{ one: undefined }], path: [0, 'one'] },
+  ],
+  ({ title }, { input, path: expectedPath }) => {
+    test(`Return path array | ${title}`, (t) => {
+      const [{ path }] = isJsonValue(input)
+      t.deepEqual(path, expectedPath)
+    })
+  },
+)
