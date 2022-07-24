@@ -1,8 +1,26 @@
-import { expectType, expectAssignable } from 'tsd'
+import {
+  expectType,
+  expectAssignable,
+  expectNotAssignable,
+  expectError,
+} from 'tsd'
 
-import isJsonValue, { Options } from './main.js'
+import isJsonValue, { Warning, Reason } from './main.js'
 
-expectType<object>(isJsonValue(true))
+const warnings = isJsonValue(true)
+expectType<Warning[]>(warnings)
+expectError(isJsonValue())
+isJsonValue(true)
+isJsonValue(Symbol(''))
+isJsonValue({})
 
-isJsonValue(true, {})
-expectAssignable<Options>({})
+const { message, path, value, reason } = warnings[0]!
+expectType<string>(message)
+expectType<PropertyKey[]>(path)
+expectType<unknown>(value)
+expectType<Reason>(reason)
+
+expectAssignable<Reason>('ignoredFunction')
+expectNotAssignable<Reason>('unresolvedToJSON')
+expectNotAssignable<Reason>('unknown')
+expectNotAssignable<Reason>(true)
