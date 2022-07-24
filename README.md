@@ -9,7 +9,7 @@ Check if a value is valid JSON.
 # Features
 
 - Detects [many types](#warnings) of invalid values with JSON
-- Returns [error messages](#message) ready to throw or log
+- Returns [warning messages](#message) ready to throw or log
 - Returns invalid properties [path](#path) and [value](#value)
 
 # Example
@@ -79,7 +79,7 @@ serialize as JSON.
 
 _Type_: `string`
 
-Warning message. Example: `'"prop" property must not be a symbol.'`
+Warning message, like `'example property must not be a symbol.'`
 
 #### path
 
@@ -97,15 +97,15 @@ Value of the invalid property.
 
 _Type_: `string`
 
-Reason which the property is invalid among:
+Reason for the warning among:
 
-- [Invalid types](#invalid-types): [`"ignoredFunction"`](#functions),
+- [Invalid type](#invalid-types): [`"ignoredFunction"`](#functions),
   [`"ignoredUndefined"`](#undefined), [`"ignoredSymbolValue"`](#symbol-values),
   [`"ignoredSymbolKey"`](#symbol-keys),
   [`"unstableInfinite"`](#nan-and-infinity), [`"unresolvedClass"`](#classes),
   [`"ignoredNotEnumerable"`](#non-enumerable-keys),
   [`"ignoredArrayProperty"`](#array-properties)
-- [Exceptions](#exceptions): [`"unsafeCycle"`](#cycles),
+- [Throws an exception](#exceptions): [`"unsafeCycle"`](#cycles),
   [`"unsafeBigInt"`](#bigint), [`"unsafeSize"`](#big-properties),
   [`"unsafeException"`](#infinite-recursion),
   [`"unsafeToJSON"`](#exceptions-in-tojson),
@@ -113,12 +113,12 @@ Reason which the property is invalid among:
 
 # Warnings
 
-This is the list of possible warnings reported by this library.
+This is the list of possibly reported warnings.
 
 ## Invalid types
 
 JSON only supports booleans, numbers, strings, arrays, objects and `null`. Any
-other type is invalid.
+other type is omitted or transformed by `JSON.stringify()`.
 
 ### Functions
 
@@ -150,11 +150,15 @@ const invalidJson = { [Symbol()]: true }
 
 ### NaN and Infinity
 
+Transformed to `null` by `JSON.stringify()`.
+
 ```js
 const invalidJson = { one: Number.NaN, two: Number.POSITIVE_INFINITY }
 ```
 
 ### Classes
+
+Transformed to plain objects by `JSON.stringify()`.
 
 ```js
 const invalidJson = { prop: new Set([]) }
