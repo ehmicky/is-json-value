@@ -13,27 +13,56 @@ const circularValue = {}
 // eslint-disable-next-line fp/no-mutation
 circularValue.self = circularValue
 
-const hasValidDescription = function ({ message, reason }) {
-  return message.endsWith(`must ${DESCRIPTIONS[reason]}.`)
-}
+const unsafeInput = { toJSON: () => ({ unsafeInput }) }
 
 each(
   [
-    arrayWithProps,
-    () => {},
-    // eslint-disable-next-line fp/no-mutating-methods
-    Object.defineProperty({}, 'prop', { value: true, enumerable: false }),
-    { [Symbol('test')]: true },
-    Symbol('test'),
-    undefined,
-    new Set([]),
+    { input: arrayWithProps, reason: 'ignoredArrayProperty' },
+    { input: () => {}, reason: 'ignoredFunction' },
+    {
+      // eslint-disable-next-line fp/no-mutating-methods
+      input: Object.defineProperty({}, 'prop', {
+        value: true,
+        enumerable: false,
+      }),
+      reason: 'ignoredNotEnumerable',
+    },
+    { input: { [Symbol('test')]: true }, reason: 'ignoredSymbolKey' },
+    { input: Symbol('test'), reason: 'ignoredSymbolValue' },
+    { input: undefined, reason: 'ignoredUndefined' },
+    { input: new Set([]), reason: 'unresolvedClass' },
+    { input: 0n, reason: 'unsafeBigInt' },
+    { input: circularValue, reason: 'unsafeCycle' },
+    { input: unsafeInput, reason: 'unsafeException' },
+    {
+      input: {
+        // eslint-disable-next-line fp/no-get-set
+        get prop() {
+          throw new Error('test')
+        },
+      },
+      reason: 'unsafeGetter',
+      title: 'unsafeGetter',
+    },
     // eslint-disable-next-line no-magic-numbers
-    0n,
-    circularValue,
+    { input: 'a'.repeat(2e7), reason: 'unsafeSize' },
+    {
+      input: {
+        toJSON() {
+          throw new Error('test')
+        },
+      },
+      reason: 'unsafeToJSON',
+      title: 'unsafeToJSON',
+    },
+    { input: Number.NaN, reason: 'unstableInfinite' },
   ],
-  ({ title }, input) => {
+  ({ title }, { input, reason: expectedReason }) => {
     test(`Return description | ${title}`, (t) => {
-      t.true(isJsonValue(input).every(hasValidDescription))
+      const errors = isJsonValue(input)
+      // eslint-disable-next-line max-nested-callbacks
+      const { message } = errors.find(({ reason }) => reason === expectedReason)
+      t.true(message.includes(`must ${DESCRIPTIONS[expectedReason]}.`))
     })
   },
 )
