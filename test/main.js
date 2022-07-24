@@ -20,3 +20,17 @@ each(
     })
   },
 )
+
+each(
+  [
+    { input: symbol, value: symbol },
+    { input: { prop: symbol }, value: symbol },
+    { input: [symbol], value: symbol },
+  ],
+  ({ title }, { input, value: expectedValue }) => {
+    test(`Return the invalid value | ${title}`, (t) => {
+      const [{ value }] = isJsonValue(input)
+      t.is(value, expectedValue)
+    })
+  },
+)
