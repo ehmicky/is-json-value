@@ -61,9 +61,11 @@ each(
   ],
   ({ title }, { input, reason: expectedReason, hasError = false }) => {
     test(`Return description | ${title}`, (t) => {
-      const errors = isJsonValue(input)
-      // eslint-disable-next-line max-nested-callbacks
-      const { message } = errors.find(({ reason }) => reason === expectedReason)
+      const warnings = isJsonValue(input)
+      const { message } = warnings.find(
+        // eslint-disable-next-line max-nested-callbacks
+        ({ reason }) => reason === expectedReason,
+      )
       t.true(message.includes(`must ${DESCRIPTIONS[expectedReason]}.`))
       t.is(hasError, message.includes(' at '))
     })

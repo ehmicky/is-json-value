@@ -1,6 +1,6 @@
 // Some normalizations performed by `safe-json-value` should not be used for
 // validation purpose
-export const isJsonError = function ({ reason }) {
+export const isWarning = function ({ reason }) {
   return !VALID_REASONS.has(reason)
 }
 

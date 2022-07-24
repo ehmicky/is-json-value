@@ -1,6 +1,6 @@
 import safeJsonValue from 'safe-json-value'
 
-import { isJsonError, getDescription } from './description.js'
+import { isWarning, getDescription } from './description.js'
 import { getPrefix } from './prefix.js'
 
 // We do not pass the `maxSize` option:
@@ -8,17 +8,17 @@ import { getPrefix } from './prefix.js'
 //    `truncate-json` instead
 //  - We still keep the default value to prevent exceptions due to large values
 export default function isJsonValue(value) {
-  return safeJsonValue(value).changes.filter(isJsonError).map(getJsonError)
+  return safeJsonValue(value).changes.filter(isWarning).map(getWarning)
 }
 
-const getJsonError = function ({ path, oldValue: value, reason, error }) {
+const getWarning = function ({ path, oldValue: value, reason, error }) {
   const message = getMessage(path, reason, error)
   return { message, path, value, reason }
 }
 
-// We do not provide with a concatenated version of all errors messages, letting
-// the user instead chose whether to show `errors[0].message`,
-// `errors.slice(number).map(getMessage)` or `errors.map(getMessage)`.
+// We do not provide with a concatenated version of all warning messages,
+// letting the user instead chose whether to show `warnings[0].message`,
+// `warnings.slice(number).map(getMessage)` or `warnings.map(getMessage)`.
 const getMessage = function (path, reason, error) {
   const prefix = getPrefix(path)
   const description = getDescription(reason)
