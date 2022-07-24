@@ -124,12 +124,14 @@ other type is omitted or transformed by `JSON.stringify()`.
 
 ```js
 const invalidJson = { prop() {} }
+JSON.stringify(invalidJson) // '{}'
 ```
 
 ### Undefined
 
 ```js
 const invalidJson = { prop: undefined }
+JSON.stringify(invalidJson) // '{}'
 ```
 
 ### Symbol values
@@ -138,6 +140,7 @@ const invalidJson = { prop: undefined }
 
 ```js
 const invalidJson = { prop: Symbol() }
+JSON.stringify(invalidJson) // '{}'
 ```
 
 ### Symbol keys
@@ -146,22 +149,21 @@ const invalidJson = { prop: Symbol() }
 
 ```js
 const invalidJson = { [Symbol()]: true }
+JSON.stringify(invalidJson) // '{}'
 ```
 
 ### NaN and Infinity
 
-Transformed to `null` by `JSON.stringify()`.
-
 ```js
 const invalidJson = { one: Number.NaN, two: Number.POSITIVE_INFINITY }
+JSON.stringify(invalidJson) // '{"one":null,"two":null}'
 ```
 
 ### Classes
 
-Transformed to plain objects by `JSON.stringify()`.
-
 ```js
 const invalidJson = { prop: new Set([]) }
+JSON.stringify(invalidJson) // '{"prop":{}}'
 ```
 
 ### Non-enumerable keys
@@ -171,6 +173,7 @@ const invalidJson = { prop: new Set([]) }
 ```js
 const invalidJson = {}
 Object.defineProperty(invalidJson, 'prop', { value: true, enumerable: false })
+JSON.stringify(invalidJson) // '{}'
 ```
 
 ### Array properties
@@ -180,11 +183,12 @@ Object.defineProperty(invalidJson, 'prop', { value: true, enumerable: false })
 ```js
 const invalidJson = []
 invalidJson.prop = true
+JSON.stringify(invalidJson) // '[]'
 ```
 
 ## Exceptions
 
-`JSON.stringify()` can throw on specific properties. Those are reported.
+`JSON.stringify()` can throw on specific properties.
 
 ### Cycles
 
@@ -193,27 +197,28 @@ invalidJson.prop = true
 ```js
 const invalidJson = { prop: true }
 invalidJson.self = invalidJson
+JSON.stringify(invalidJson) // Throws: Converting circular structure to JSON
 ```
 
 ### BigInt
 
 ```js
 const invalidJson = { prop: 0n }
+JSON.stringify(invalidJson) // Throws: Do not know how to serialize a BigInt
 ```
 
 ### Big properties
 
-Big properties strings can make `JSON.serialize()` crash the process due to
-memory limits.
-
 ```js
 const invalidJson = { prop: '\n'.repeat(5e8) }
+JSON.stringify(invalidJson) // Throws: Invalid string length
 ```
 
 ### Infinite recursion
 
 ```js
 const invalidJson = { toJSON: () => ({ invalidJson }) }
+JSON.stringify(invalidJson) // Throws: Maximum call stack size exceeded
 ```
 
 ### Exceptions in `toJSON()`
@@ -226,6 +231,7 @@ const invalidJson = {
     },
   },
 }
+JSON.stringify(invalidJson) // Throws: example
 ```
 
 ### Exceptions in getters
@@ -238,6 +244,7 @@ const invalidJson = {
     throw new Error('example')
   },
 }
+JSON.stringify(invalidJson) // Throws: example
 ```
 
 ### Exceptions in proxies
@@ -253,6 +260,7 @@ const invalidJson = new Proxy(
     },
   },
 )
+JSON.stringify(invalidJson) // Throws: example
 ```
 
 # Related projects
