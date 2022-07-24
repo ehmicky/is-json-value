@@ -29,4 +29,4 @@ const serializeStringKey = function (key, index) {
 
 // Valid variable name in JavaScript.
 // Does not include zero-width spaces since those are invisible.
-const JS_VAR_NAME_REGEXP = /[\p{ID_Start}$_][\p{ID_Continue}$_]*/u
+const JS_VAR_NAME_REGEXP = /^[\p{ID_Start}$_][\p{ID_Continue}$_]*$/u
