@@ -73,7 +73,7 @@ JSON, that array is empty.
 ### Warning
 
 Each warning is an object indicating that a specific property is invalid to
-serialize as JSON.
+serialize as JSON. The same property might have multiple warnings.
 
 #### message
 
