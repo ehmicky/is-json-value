@@ -33,7 +33,7 @@ each(
     { input: new Set([]), reason: 'unresolvedClass' },
     { input: 0n, reason: 'unsafeBigInt' },
     { input: circularValue, reason: 'unsafeCycle' },
-    { input: unsafeInput, reason: 'unsafeException' },
+    { input: unsafeInput, reason: 'unsafeException', hasError: true },
     {
       input: {
         // eslint-disable-next-line fp/no-get-set
@@ -42,6 +42,7 @@ each(
         },
       },
       reason: 'unsafeGetter',
+      hasError: true,
       title: 'unsafeGetter',
     },
     // eslint-disable-next-line no-magic-numbers
@@ -53,16 +54,18 @@ each(
         },
       },
       reason: 'unsafeToJSON',
+      hasError: true,
       title: 'unsafeToJSON',
     },
     { input: Number.NaN, reason: 'unstableInfinite' },
   ],
-  ({ title }, { input, reason: expectedReason }) => {
+  ({ title }, { input, reason: expectedReason, hasError = false }) => {
     test(`Return description | ${title}`, (t) => {
       const errors = isJsonValue(input)
       // eslint-disable-next-line max-nested-callbacks
       const { message } = errors.find(({ reason }) => reason === expectedReason)
       t.true(message.includes(`must ${DESCRIPTIONS[expectedReason]}.`))
+      t.is(hasError, message.includes(' at '))
     })
   },
 )
