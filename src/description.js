@@ -16,7 +16,7 @@ export const getDescription = function (reason) {
   return `must ${DESCRIPTIONS[reason]}.`
 }
 
-const DESCRIPTIONS = {
+export const DESCRIPTIONS = {
   ignoredArrayProperty: 'not be a property on an array',
   ignoredFunction: 'not be a function',
   ignoredNotEnumerable: 'be enumerable',
