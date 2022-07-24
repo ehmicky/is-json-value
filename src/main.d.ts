@@ -1,7 +1,40 @@
+import type { Reason as SafeJsonValueReason } from 'safe-json-value'
+
 /**
- * `is-json-value` options
+ *
  */
-export interface Options {}
+export type Reason = Exclude<
+  SafeJsonValueReason,
+  | 'descriptorNotConfigurable'
+  | 'descriptorNotWritable'
+  | 'unresolvedGetter'
+  | 'unresolvedToJSON'
+>
+
+/**
+ *
+ */
+export interface Warning {
+  /**
+   *
+   */
+  message: string
+
+  /**
+   *
+   */
+  path: PropertyKey[]
+
+  /**
+   *
+   */
+  value: unknown
+
+  /**
+   *
+   */
+  reason: Reason
+}
 
 /**
  *
@@ -9,4 +42,4 @@ export interface Options {}
  * ```js
  * ```
  */
-export default function isJsonValue(value: any, options?: Options): object
+export default function isJsonValue(value: any): Warning[]
