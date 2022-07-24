@@ -23,7 +23,7 @@ const getMessage = function (path, reason, error) {
   const prefix = getPrefix(path)
   const description = getDescription(reason)
   const errorStack = getErrorStack(error)
-  return `${prefix}${description}${errorStack}`
+  return `${prefix} ${description}${errorStack}`
 }
 
 const getErrorStack = function (error) {

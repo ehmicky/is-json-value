@@ -29,12 +29,12 @@ each(
   ({ title }, { input, prefix }) => {
     test(`Serialize path | ${title}`, (t) => {
       const [{ message }] = isJsonValue(input)
-      t.true(message.startsWith(`${prefix} property`))
+      t.true(message.startsWith(`Property "${prefix}" `))
     })
   },
 )
 
 test('Serialize top-level path', (t) => {
   const [{ message }] = isJsonValue()
-  t.is(message, 'must not be undefined.')
+  t.is(message, 'It must not be undefined.')
 })

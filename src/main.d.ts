@@ -17,7 +17,7 @@ export type Reason = Exclude<
  */
 export interface Warning {
   /**
-   * Warning message, like `'example property must not be a symbol.'`
+   * Warning message, like `'Property "example" must not be a symbol.'`
    */
   message: string
 
@@ -56,13 +56,13 @@ export interface Warning {
  * console.log(warnings)
  * // [
  * //   {
- * //     message: 'two.three property must not be a symbol.',
+ * //     message: 'Property "two.three" must not be a symbol.',
  * //     path: ['two', 'three'],
  * //     value: Symbol(),
  * //     reason: 'ignoredSymbolValue'
  * //   },
  * //   {
- * //     message: 'self property must not be a circular value.',
+ * //     message: 'Property "self" must not be a circular value.',
  * //     path: ['self'],
  * //     value: <ref *1> { one: true, two: [Object], self: [Circular *1] },
  * //     reason: 'unsafeCycle'
@@ -70,7 +70,7 @@ export interface Warning {
  * // ]
  *
  * if (!isValidJson) {
- *   // Error: two.three property must not be a symbol.
+ *   // Error: Property "two.three" must not be a symbol.
  *   throw new Error(warnings[0].message)
  * }
  * ```

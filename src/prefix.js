@@ -1,9 +1,8 @@
 // Retrieve property path as a string
 export const getPrefix = function (path) {
-  return path.length === 0 ? '' : `${serializePath(path)} property `
+  return path.length === 0 ? 'It' : `Property "${serializePath(path)}"`
 }
 
-// We do not quote the variable name so that user can easily prefix it
 const serializePath = function (path) {
   return path.map(serializeKey).join('')
 }

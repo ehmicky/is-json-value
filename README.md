@@ -31,13 +31,13 @@ const isValidJson = warnings.length === 0 // false
 console.log(warnings)
 // [
 //   {
-//     message: 'two.three property must not be a symbol.',
+//     message: 'Property "two.three" must not be a symbol.',
 //     path: ['two', 'three'],
 //     value: Symbol(),
 //     reason: 'ignoredSymbolValue'
 //   },
 //   {
-//     message: 'self property must not be a circular value.',
+//     message: 'Property "self" must not be a circular value.',
 //     path: ['self'],
 //     value: <ref *1> { one: true, two: [Object], self: [Circular *1] },
 //     reason: 'unsafeCycle'
@@ -45,7 +45,7 @@ console.log(warnings)
 // ]
 
 if (!isValidJson) {
-  // Error: two.three property must not be a symbol.
+  // Error: Property "two.three" must not be a symbol.
   throw new Error(warnings[0].message)
 }
 ```
@@ -79,7 +79,7 @@ serialize as JSON. The same property might have multiple warnings.
 
 _Type_: `string`
 
-Warning message, like `'example property must not be a symbol.'`
+Warning message, like `'Property "example" must not be a symbol.'`
 
 #### path
 
