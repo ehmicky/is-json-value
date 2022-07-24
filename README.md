@@ -6,14 +6,39 @@
 
 Check if a value is valid JSON.
 
-Work in progress!
-
 # Features
 
 # Example
 
+<!-- eslint-disable symbol-description, fp/no-mutation -->
+
 ```js
 import isJsonValue from 'is-json-value'
+
+const input = { one: true, two: { three: Symbol() } }
+input.self = input
+
+// Throws due to cycle with 'self'.
+// Also, 'two.three' would be omitted since it has an invalid JSON type.
+JSON.stringify(input)
+
+const warnings = isJsonValue(input)
+const isValidJson = warnings.length === 0 // false
+console.log(warnings)
+// [
+//   {
+//     message: 'two.three property must not be a symbol.',
+//     path: ['two', 'three'],
+//     value: Symbol(),
+//     reason: 'ignoredSymbolValue'
+//   },
+//   {
+//     message: 'self property must not be a circular value.',
+//     path: ['self'],
+//     value: <ref *1> { one: true, two: [Object], self: [Circular *1] },
+//     reason: 'unsafeCycle'
+//   }
+// ]
 ```
 
 # Install
@@ -28,19 +53,194 @@ not `require()`.
 
 # API
 
-## isJsonValue(value, options?)
+## isJsonValue(input)
 
-`value` `any`\
-`options` [`Options?`](#options)\
-_Return value_: [`object`](#return-value)
+`input` `any`\
+_Return value_: [`Warning[]`](#warning)
 
-### Options
+Returns an array of [warnings](#warning). If `input` is valid to serialize as
+JSON, that array is empty.
 
-Object with the following properties.
+### Warning
 
-### Return value
+Each warning is an object indicating that a specific property is invalid to
+serialize as JSON.
 
-Object with the following properties.
+#### message
+
+_Type_: `string`
+
+Warning message. Example: `'"prop" property must not be a symbol.'`
+
+#### path
+
+_Type_: `Array<string | symbol | number>`
+
+Path to the invalid property. Empty array if this is the top-level value.
+
+#### value
+
+_Type_: `unknown`
+
+Value of the invalid property.
+
+#### reason
+
+_Type_: `string`
+
+Reason which the property is invalid among:
+
+- [Invalid types](#invalid-types): [`"ignoredFunction"`](#functions),
+  [`"ignoredUndefined"`](#undefined), [`"ignoredSymbolValue"`](#symbol-values),
+  [`"ignoredSymbolKey"`](#symbol-keys),
+  [`"unstableInfinite"`](#nan-and-infinity), [`"unresolvedClass"`](#classes),
+  [`"ignoredNotEnumerable"`](#non-enumerable-keys),
+  [`"ignoredArrayProperty"`](#array-properties)
+- [Exceptions](#exceptions): [`"unsafeCycle"`](#cycles),
+  [`"unsafeBigInt"`](#bigint), [`"unsafeSize"`](#big-properties),
+  [`"unsafeException"`](#infinite-recursion),
+  [`"unsafeToJSON"`](#exceptions-in-tojson),
+  [`"unsafeGetter"`](#exceptions-in-getters)
+
+# Warnings
+
+This is the list of possible warnings reported by this library.
+
+## Invalid types
+
+JSON only supports booleans, numbers, strings, arrays, objects and `null`. Any
+other type is invalid.
+
+### Functions
+
+```js
+const invalidJson = { prop() {} }
+```
+
+### Undefined
+
+```js
+const invalidJson = { prop: undefined }
+```
+
+### Symbol values
+
+<!-- eslint-disable symbol-description -->
+
+```js
+const invalidJson = { prop: Symbol() }
+```
+
+### Symbol keys
+
+<!-- eslint-disable symbol-description -->
+
+```js
+const invalidJson = { [Symbol()]: true }
+```
+
+### NaN and Infinity
+
+```js
+const invalidJson = { one: Number.NaN, two: Number.POSITIVE_INFINITY }
+```
+
+### Classes
+
+```js
+const invalidJson = { prop: new Set([]) }
+```
+
+### Non-enumerable keys
+
+<!-- eslint-disable fp/no-mutating-methods -->
+
+```js
+const invalidJson = {}
+Object.defineProperty(invalidJson, 'prop', { value: true, enumerable: false })
+```
+
+### Array properties
+
+<!-- eslint-disable fp/no-mutation -->
+
+```js
+const invalidJson = []
+invalidJson.prop = true
+```
+
+## Exceptions
+
+`JSON.stringify()` can throw on specific properties. Those are reported.
+
+### Cycles
+
+<!-- eslint-disable fp/no-mutation -->
+
+```js
+const invalidJson = { prop: true }
+invalidJson.self = invalidJson
+```
+
+### BigInt
+
+```js
+const invalidJson = { prop: 0n }
+```
+
+### Big properties
+
+Big properties strings can make `JSON.serialize()` crash the process due to
+memory limits.
+
+```js
+const invalidJson = { prop: '\n'.repeat(5e8) }
+```
+
+### Infinite recursion
+
+```js
+const invalidJson = { toJSON: () => ({ invalidJson }) }
+```
+
+### Exceptions in `toJSON()`
+
+```js
+const invalidJson = {
+  prop: {
+    toJSON() {
+      throw new Error('example')
+    },
+  },
+}
+```
+
+### Exceptions in getters
+
+<!-- eslint-disable fp/no-get-set -->
+
+```js
+const invalidJson = {
+  get prop() {
+    throw new Error('example')
+  },
+}
+```
+
+### Exceptions in proxies
+
+<!-- eslint-disable fp/no-proxy -->
+
+```js
+const invalidJson = new Proxy(
+  { prop: true },
+  {
+    get() {
+      throw new Error('example')
+    },
+  },
+)
+```
 
 # Related projects
 

@@ -7,8 +7,8 @@ import { getPrefix } from './prefix.js'
 //  - It is better for users to use `JSON.stringify(value).length` or
 //    `truncate-json` instead
 //  - We still keep the default value to prevent exceptions due to large values
-export default function isJsonValue(value) {
-  return safeJsonValue(value).changes.filter(isWarning).map(getWarning)
+export default function isJsonValue(input) {
+  return safeJsonValue(input).changes.filter(isWarning).map(getWarning)
 }
 
 const getWarning = function ({ path, oldValue: value, reason, error }) {

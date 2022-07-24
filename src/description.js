@@ -25,7 +25,7 @@ export const DESCRIPTIONS = {
   ignoredUndefined: 'not be undefined',
   unresolvedClass: 'be a plain object',
   unsafeBigInt: 'not be a bigint',
-  unsafeCycle: 'not be an infinite cycle',
+  unsafeCycle: 'not be a circular value',
   unsafeException: 'not throw an exception',
   unsafeGetter: 'not throw an exception',
   unsafeSize: 'have a smaller size',

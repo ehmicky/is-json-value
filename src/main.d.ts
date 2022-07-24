@@ -42,4 +42,4 @@ export interface Warning {
  * ```js
  * ```
  */
-export default function isJsonValue(value: any): Warning[]
+export default function isJsonValue(input: any): Warning[]
