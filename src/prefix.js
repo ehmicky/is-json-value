@@ -11,7 +11,7 @@ const serializePath = function (path) {
 const serializeKey = function (key, index) {
   const type = typeof key
   return type === 'number' || type === 'symbol'
-    ? `[${key}]`
+    ? `[${String(key)}]`
     : serializeStringKey(key, index)
 }
 
