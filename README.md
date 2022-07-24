@@ -8,6 +8,10 @@ Check if a value is valid JSON.
 
 # Features
 
+- Detects [many types](#warnings) of invalid values with JSON
+- Returns [error messages](#message) ready to throw or log
+- Returns invalid properties [path](#path) and [value](#value)
+
 # Example
 
 <!-- eslint-disable symbol-description, fp/no-mutation -->
@@ -39,6 +43,11 @@ console.log(warnings)
 //     reason: 'unsafeCycle'
 //   }
 // ]
+
+if (!isValidJson) {
+  // Error: two.three property must not be a symbol.
+  throw new Error(warnings[0].message)
+}
 ```
 
 # Install
