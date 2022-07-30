@@ -1,8 +1,8 @@
 import { expectType, expectAssignable } from 'tsd'
 
-import templateName, { Options } from './main.js'
+import isJsonValue, { Options } from './main.js'
 
-expectType<object>(templateName(true))
+expectType<object>(isJsonValue(true))
 
-templateName(true, {})
+isJsonValue(true, {})
 expectAssignable<Options>({})

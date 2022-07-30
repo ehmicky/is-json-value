@@ -1,4 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-export default function templateName(value, options = {}) {
+export default function isJsonValue(value, options = {}) {
   return value
 }

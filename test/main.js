@@ -1,6 +1,6 @@
 import test from 'ava'
-import templateName from 'template-name'
+import isJsonValue from 'is-json-value'
 
 test('Dummy test', (t) => {
-  t.is(typeof templateName, 'function')
+  t.is(typeof isJsonValue, 'function')
 })
