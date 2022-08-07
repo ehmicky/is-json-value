@@ -269,6 +269,8 @@ JSON.stringify(invalidJson) // Throws: example
   serialization should never fail
 - [`truncate-json`](https://github.com/ehmicky/truncate-json): Truncate a JSON
   string
+- [`guess-json-indent`](https://github.com/ehmicky/guess-json-indent): Guess the
+  indentation of a JSON string
 
 # Support
 
