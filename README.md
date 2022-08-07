@@ -267,6 +267,8 @@ JSON.stringify(invalidJson) // Throws: example
 
 - [`safe-json-value`](https://github.com/ehmicky/safe-json-value): ⛑️ JSON
   serialization should never fail
+- [`truncate-json`](https://github.com/ehmicky/truncate-json): Truncate a JSON
+  string
 
 # Support
 
