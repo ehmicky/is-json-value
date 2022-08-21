@@ -14,6 +14,11 @@ const circularValue = {}
 circularValue.self = circularValue
 
 const unsafeInput = { toJSON: () => ({ unsafeInput }) }
+const unsafeToJSON = {
+  toJSON() {
+    throw new Error('test')
+  },
+}
 
 each(
   [
@@ -48,11 +53,7 @@ each(
     // eslint-disable-next-line no-magic-numbers
     { input: 'a'.repeat(2e7), reason: 'unsafeSize' },
     {
-      input: {
-        toJSON() {
-          throw new Error('test')
-        },
-      },
+      input: unsafeToJSON,
       reason: 'unsafeToJSON',
       hasError: true,
       title: 'unsafeToJSON',
@@ -67,7 +68,16 @@ each(
         ({ reason }) => reason === expectedReason,
       )
       t.true(message.includes(`must ${DESCRIPTIONS[expectedReason]}.`))
-      t.is(hasError, message.includes(' at '))
+      t.is(hasError, message.includes('Error'))
     })
   },
 )
+
+test.serial('Returns error name and message', (t) => {
+  // eslint-disable-next-line fp/no-mutation
+  Error.prepareStackTrace = () => 'stack'
+  const [{ message }] = isJsonValue(unsafeToJSON)
+  t.true(message.includes('Error'))
+  // eslint-disable-next-line fp/no-delete
+  delete Error.prepareStackTrace
+})

@@ -1,3 +1,9 @@
+# 1.2.1
+
+## Bug fixes
+
+- Improve how errors are handled in Firefox and Safari
+
 # 1.2.0
 
 # Features

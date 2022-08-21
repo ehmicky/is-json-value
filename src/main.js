@@ -27,5 +27,11 @@ const getMessage = function (path, reason, error) {
 }
 
 const getErrorStack = function (error) {
-  return error === undefined ? '' : `\n${error.stack}`
+  return error === undefined ? '' : `\n${stringifyError(error)}`
+}
+
+const stringifyError = function ({ name, message, stack }) {
+  return stack.includes(name) && stack.includes(message)
+    ? stack
+    : `${name}: ${message}\n${stack}`
 }
