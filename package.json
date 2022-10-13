@@ -34,7 +34,7 @@
     "validate",
     "validation"
   ],
-  "license": "Apache-2.0",
+  "license": "MIT",
   "homepage": "https://www.github.com/ehmicky/is-json-value",
   "repository": "ehmicky/is-json-value",
   "bugs": {
