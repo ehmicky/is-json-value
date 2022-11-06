@@ -50,7 +50,7 @@
     "test": "test"
   },
   "dependencies": {
-    "safe-json-value": "^1.8.0"
+    "safe-json-value": "^1.9.0"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^1.0.99",
