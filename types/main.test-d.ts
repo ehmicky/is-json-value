@@ -5,7 +5,7 @@ import {
   expectError,
 } from 'tsd'
 
-import isJsonValue, { Warning, Reason } from './main.js'
+import isJsonValue, { Warning, Reason } from 'is-json-value'
 
 const warnings = isJsonValue(true)
 expectType<Warning[]>(warnings)
