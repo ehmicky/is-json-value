@@ -64,7 +64,6 @@ each(
     test(`Return description | ${title}`, (t) => {
       const warnings = isJsonValue(input)
       const { message } = warnings.find(
-        // eslint-disable-next-line max-nested-callbacks
         ({ reason }) => reason === expectedReason,
       )
       t.true(message.includes(`must ${DESCRIPTIONS[expectedReason]}.`))

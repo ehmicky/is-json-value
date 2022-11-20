@@ -48,7 +48,6 @@ each(
       t.is(isJsonValue(input).length, 0)
       t.true(
         safeJsonValue(input).changes.some(
-          // eslint-disable-next-line max-nested-callbacks
           ({ reason }) => reason === expectedReason,
         ),
       )
