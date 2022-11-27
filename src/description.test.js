@@ -3,7 +3,7 @@ import isJsonValue from 'is-json-value'
 import { each } from 'test-each'
 
 // eslint-disable-next-line no-restricted-imports
-import { DESCRIPTIONS } from '../src/description.js'
+import { DESCRIPTIONS } from './description.js'
 
 const arrayWithProps = []
 // eslint-disable-next-line fp/no-mutation
