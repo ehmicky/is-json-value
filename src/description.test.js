@@ -1,10 +1,11 @@
 import test from 'ava'
-import isJsonValue from 'is-json-value'
 import safeJsonValue from 'safe-json-value'
 import { each } from 'test-each'
 
 // eslint-disable-next-line no-restricted-imports
 import { DESCRIPTIONS } from './description.js'
+
+import isJsonValue from 'is-json-value'
 
 const arrayWithProps = []
 // eslint-disable-next-line fp/no-mutation
