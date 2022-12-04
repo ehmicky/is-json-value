@@ -1,15 +1,11 @@
-import {
-  expectType,
-  expectAssignable,
-  expectNotAssignable,
-  expectError,
-} from 'tsd'
+import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
 
 import isJsonValue, { Warning, Reason } from 'is-json-value'
 
 const warnings = isJsonValue(true)
 expectType<Warning[]>(warnings)
-expectError(isJsonValue())
+// @ts-expect-error
+isJsonValue()
 isJsonValue(true)
 isJsonValue(Symbol(''))
 isJsonValue({})
