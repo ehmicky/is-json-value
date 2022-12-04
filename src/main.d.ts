@@ -75,4 +75,4 @@ export interface Warning {
  * }
  * ```
  */
-export default function isJsonValue(input: any): Warning[]
+export default function isJsonValue(input: unknown): Warning[]
