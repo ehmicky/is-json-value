@@ -55,7 +55,7 @@
     "safe-json-value": "^1.11.0"
   },
   "devDependencies": {
-    "@ehmicky/dev-tasks": "^2.0.54",
+    "@ehmicky/dev-tasks": "^2.0.55",
     "test-each": "^5.7.1"
   },
   "engines": {
