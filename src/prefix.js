@@ -1,20 +1,17 @@
 // Retrieve property path as a string
-export const getPrefix = function (path) {
-  return path.length === 0 ? 'It' : `Property "${serializePath(path)}"`
-}
+export const getPrefix = (path) =>
+  path.length === 0 ? 'It' : `Property "${serializePath(path)}"`
 
-const serializePath = function (path) {
-  return path.map(serializeKey).join('')
-}
+const serializePath = (path) => path.map(serializeKey).join('')
 
-const serializeKey = function (key, index) {
+const serializeKey = (key, index) => {
   const type = typeof key
   return type === 'number' || type === 'symbol'
     ? `[${String(key)}]`
     : serializeStringKey(key, index)
 }
 
-const serializeStringKey = function (key, index) {
+const serializeStringKey = (key, index) => {
   if (key === '') {
     return '[""]'
   }

@@ -7,11 +7,12 @@ import { getPrefix } from './prefix.js'
 //  - It is better for users to use `JSON.stringify(value).length` or
 //    `truncate-json` instead
 //  - We still keep the default value to prevent exceptions due to large values
-export default function isJsonValue(input) {
-  return safeJsonValue(input).changes.filter(isWarning).map(getWarning)
-}
+const isJsonValue = (input) =>
+  safeJsonValue(input).changes.filter(isWarning).map(getWarning)
 
-const getWarning = function ({ path, oldValue: value, reason, error }) {
+export default isJsonValue
+
+const getWarning = ({ path, oldValue: value, reason, error }) => {
   const message = getMessage(path, reason, error)
   return { message, path, value, reason }
 }
@@ -19,19 +20,17 @@ const getWarning = function ({ path, oldValue: value, reason, error }) {
 // We do not provide with a concatenated version of all warning messages,
 // letting the user instead chose whether to show `warnings[0].message`,
 // `warnings.slice(number).map(getMessage)` or `warnings.map(getMessage)`.
-const getMessage = function (path, reason, error) {
+const getMessage = (path, reason, error) => {
   const prefix = getPrefix(path)
   const description = getDescription(reason)
   const errorStack = getErrorStack(error)
   return `${prefix} ${description}${errorStack}`
 }
 
-const getErrorStack = function (error) {
-  return error === undefined ? '' : `\n${stringifyError(error)}`
-}
+const getErrorStack = (error) =>
+  error === undefined ? '' : `\n${stringifyError(error)}`
 
-const stringifyError = function ({ name, message, stack }) {
-  return stack.includes(name) && stack.includes(message)
+const stringifyError = ({ name, message, stack }) =>
+  stack.includes(name) && stack.includes(message)
     ? stack
     : `${name}: ${message}\n${stack}`
-}

@@ -1,8 +1,6 @@
 // Some normalizations performed by `safe-json-value` should not be used for
 // validation purpose
-export const isWarning = function ({ reason }) {
-  return !VALID_REASONS.has(reason)
-}
+export const isWarning = ({ reason }) => !VALID_REASONS.has(reason)
 
 const VALID_REASONS = new Set([
   'descriptorNotConfigurable',
@@ -12,9 +10,7 @@ const VALID_REASONS = new Set([
 ])
 
 // Retrieve a reason-specific description string
-export const getDescription = function (reason) {
-  return `must ${DESCRIPTIONS[reason]}.`
-}
+export const getDescription = (reason) => `must ${DESCRIPTIONS[reason]}.`
 
 export const DESCRIPTIONS = {
   ignoredArrayProperty: 'not be a property on an array',

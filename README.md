@@ -127,7 +127,7 @@ other type is omitted or transformed by `JSON.stringify()`.
 ### Functions
 
 ```js
-const invalidJson = { prop() {} }
+const invalidJson = { prop: () => {} }
 JSON.stringify(invalidJson) // '{}'
 ```
 
@@ -230,7 +230,7 @@ JSON.stringify(invalidJson) // Throws: Maximum call stack size exceeded
 ```js
 const invalidJson = {
   prop: {
-    toJSON() {
+    toJSON: () => {
       throw new Error('example')
     },
   },
@@ -259,7 +259,7 @@ JSON.stringify(invalidJson) // Throws: example
 const invalidJson = new Proxy(
   { prop: true },
   {
-    get() {
+    get: () => {
       throw new Error('example')
     },
   },

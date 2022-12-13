@@ -17,7 +17,7 @@ circularValue.self = circularValue
 
 const unsafeInput = { toJSON: () => ({ unsafeInput }) }
 const unsafeToJSON = {
-  toJSON() {
+  toJSON: () => {
     throw new Error('test')
   },
 }
@@ -116,9 +116,7 @@ each(
     },
     {
       input: {
-        toJSON() {
-          return {}
-        },
+        toJSON: () => ({}),
       },
       reason: 'unresolvedToJSON',
     },
