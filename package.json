@@ -51,7 +51,7 @@
     "lib": "src"
   },
   "dependencies": {
-    "safe-json-value": "^1.11.0"
+    "safe-json-value": "^2.0.0"
   },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^2.0.80",
