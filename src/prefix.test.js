@@ -2,7 +2,6 @@ import test from 'ava'
 import isJsonValue from 'is-json-value'
 import { each } from 'test-each'
 
-
 each(
   [
     { input: { [Symbol('test')]: undefined }, prefix: '[Symbol(test)]' },

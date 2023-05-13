@@ -6,7 +6,6 @@ import { each } from 'test-each'
 // eslint-disable-next-line no-restricted-imports
 import { DESCRIPTIONS } from './description.js'
 
-
 const arrayWithProps = []
 // eslint-disable-next-line fp/no-mutation
 arrayWithProps.prop = true
