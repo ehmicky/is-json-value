@@ -42,7 +42,10 @@
   ],
   "license": "MIT",
   "homepage": "https://www.github.com/ehmicky/is-json-value",
-  "repository": "ehmicky/is-json-value",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehmicky/is-json-value.git"
+  },
   "bugs": {
     "url": "https://github.com/ehmicky/is-json-value/issues"
   },
