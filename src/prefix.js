@@ -23,6 +23,5 @@ const serializeStringKey = (key, index) => {
   return index === 0 ? key : `.${key}`
 }
 
-// Valid variable name in JavaScript.
-// Does not include zero-width spaces since those are invisible.
+// Valid variable name in JavaScript
 const JS_VAR_NAME_REGEXP = /^[\p{ID_Start}$_][\p{ID_Continue}$_]*$/u

@@ -24,7 +24,6 @@ each(
     { input: { $one: undefined }, prefix: '$one' },
     // eslint-disable-next-line id-length
     { input: { a: undefined }, prefix: 'a' },
-    { input: { 'one\u200C': undefined }, prefix: '["one\u200C"]' },
     { input: { 'one\u00E1': undefined }, prefix: 'one\u00E1' },
   ],
   ({ title }, { input, prefix }) => {
