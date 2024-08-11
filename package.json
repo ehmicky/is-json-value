@@ -20,8 +20,8 @@
   "description": "Check if a value is valid JSON",
   "keywords": [
     "bigint",
-    "circular",
     "cycle",
+    "circular",
     "enumerable",
     "exception-handling",
     "exceptions",
