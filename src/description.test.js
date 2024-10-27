@@ -27,7 +27,6 @@ each(
     { input: arrayWithProps, reason: 'ignoredArrayProperty' },
     { input: () => {}, reason: 'ignoredFunction' },
     {
-      // eslint-disable-next-line fp/no-mutating-methods
       input: Object.defineProperty({}, 'prop', {
         value: true,
         enumerable: false,
@@ -86,7 +85,6 @@ test.serial('Returns error name and message', (t) => {
 each(
   [
     {
-      // eslint-disable-next-line fp/no-mutating-methods
       input: Object.defineProperty({}, 'prop', {
         value: true,
         enumerable: true,
@@ -96,7 +94,6 @@ each(
       reason: 'descriptorNotWritable',
     },
     {
-      // eslint-disable-next-line fp/no-mutating-methods
       input: Object.defineProperty({}, 'prop', {
         value: true,
         enumerable: true,
