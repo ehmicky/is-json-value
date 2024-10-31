@@ -1,6 +1,6 @@
-import { expectType, expectAssignable, expectNotAssignable } from 'tsd'
+import { expectAssignable, expectNotAssignable, expectType } from 'tsd'
 
-import isJsonValue, { type Warning, type Reason } from 'is-json-value'
+import isJsonValue, { type Reason, type Warning } from 'is-json-value'
 
 const warnings = isJsonValue(true)
 expectType<Warning[]>(warnings)

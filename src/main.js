@@ -1,6 +1,6 @@
 import safeJsonValue from 'safe-json-value'
 
-import { isWarning, getDescription } from './description.js'
+import { getDescription, isWarning } from './description.js'
 import { getPrefix } from './prefix.js'
 
 // We do not pass the `maxSize` option:
